@@ -42,13 +42,39 @@ app.post('/api/notes', (req, res) => {
     if ( title && text){
         // new note to save
         const newNote = { title, text};
+        // read db json file
+        fs.readFile('./db/db.json', 'utf8', (err, data) =>{
+            // if error exit function
+            if (err){
+                res.status(500).json('Error recieving notes');
+                return;
+            }
+
+            const notes = JSON.parse(data);
+            notes.push(newNote);
+
+            const notesString = JSON.stringify(notes, null, 2);
+            fs.writeFile('./db/db.json', notesString, (err)=>
+                err //ternary function
+                    ? console.error(err)
+                    :console.log(`Note for ${newNote} was written to JSON file`)
+            );
+        });
+
+        //create reponse json
+        const response = {
+            status: 'success',
+            body: newNote,
+        };
+        //display if successful based on response
+        console.log(response);
+        res.status(201).json(response);
+    }
+    else {
+        res.status(500).json('Error in saving note');
     }
     
-    // read db json file
-    fs.readFile('./db/db.json', 'utf8', (err, data) =>{
-
-    });
-
+    
 });
 
 // listen to port 
