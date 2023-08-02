@@ -14,11 +14,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-
-// // GET Route for anything wrong
-// app.get('*', (req, res) =>
-//   res.sendFile(path.join(__dirname, '/public/index.html'))
-// );
 // GET Route for homepage
 app.get('/', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/index.html'))
@@ -51,6 +46,11 @@ app.post('/api/notes', (req, res) => {
     //log to terminal
     console.info(`${req.method} request received to post notes`);
 });
+
+// GET Route for anything wrong
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+);
 
 // listen to port 
 app.listen(PORT, () =>
