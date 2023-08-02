@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const db = require('./db/db.json')
+let db = require('./db/db.json')
 const { v4: uuidv4} =  require('uuid');
 //init stuff
 const PORT = process.env.PORT || 3001;
@@ -52,11 +52,11 @@ app.delete('/api/notes/:id', (req ,res) => {
     // get id from req
     const id = req.params.id;
     // filter out the id 
-    newDb = db.filter( notes => notes.id != id);
+    db = db.filter( notes => notes.id != id);
     // rewrite db file
-    fs.writeFileSync("./db/db.json", JSON.stringify(newDb, null, 2));
+    fs.writeFileSync("./db/db.json", JSON.stringify(db, null, 2));
     // the db file is stored as the response
-    res.json(newDb);
+    res.json(db);
     // console
     console.info(`${req.method} request received to delete a note:`);
     console.info(`Note: ${id}`);
