@@ -47,6 +47,13 @@ app.post('/api/notes', (req, res) => {
     console.info(`${req.method} request received to post notes`);
 });
 
+// DELETE function
+app.delete('/api/notes/:id', (req ,res) => {
+    // get id from req
+    const id = req.params.id;
+    console.log(`testing ${id}`);
+});
+
 // GET Route for anything wrong
 app.get('*', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/index.html'))
