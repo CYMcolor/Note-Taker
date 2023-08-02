@@ -51,7 +51,15 @@ app.post('/api/notes', (req, res) => {
 app.delete('/api/notes/:id', (req ,res) => {
     // get id from req
     const id = req.params.id;
-    console.log(`testing ${id}`);
+    // filter out the id 
+    newDb = db.filter( notes => notes.id != id);
+    // rewrite db file
+    fs.writeFileSync("./db/db.json", JSON.stringify(newDb, null, 2));
+    // the db file is stored as the response
+    res.json(newDb);
+    // console
+    console.info(`${req.method} request received to delete a note:`);
+    console.info(`Note: ${id}`);
 });
 
 // GET Route for anything wrong
