@@ -40,7 +40,11 @@ app.post('/api/notes', (req, res) => {
     //db is the joson file info
     db.push(newNote);
     // writes to db file (doesnt work without sync)
-    fs.writeFileSync("./db/db.json", JSON.stringify(db, null, 2));
+    fs.writeFileSync("./db/db.json", JSON.stringify(db, null, 2), (err) =>
+        err
+        ? console.error(err)
+        : console.info('Successfully updated notes database')
+    );
     // the db file is stored as the response
     res.json(db);
     //log to terminal
@@ -54,7 +58,12 @@ app.delete('/api/notes/:id', (req ,res) => {
     // filter out the id 
     db = db.filter( notes => notes.id != id);
     // rewrite db file
-    fs.writeFileSync("./db/db.json", JSON.stringify(db, null, 2));
+    fs.writeFileSync("./db/db.json", JSON.stringify(db, null, 2),
+    (err) =>
+        err
+        ? console.error(err)
+        : console.info('Successfully updated notes database')
+    );
     // the db file is stored as the response
     res.json(db);
     // console
