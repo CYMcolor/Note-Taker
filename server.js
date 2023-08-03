@@ -68,7 +68,7 @@ app.delete('/api/notes/:id', (req ,res) => {
     res.json(db);
     // console
     console.info(`${req.method} request received to delete a note:`);
-    console.info(`Note: ${id}`);
+    console.info(`\t${id}`);
 });
 
 // GET Route for anything wrong
